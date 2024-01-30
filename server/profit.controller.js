@@ -171,37 +171,3 @@ exports.getGrowth = async (req, res) => {
     });
   }
 };
-
-const downsampleData = async (targetPoints) => {
-  try {
-    const dataLength = await Profit.countDocuments();
-    const ratio = dataLength / targetPoints;
-
-    const downsampledData = await Profit.aggregate([
-      {
-        $group: {
-          _id: {
-            $multiply: [
-              {
-                $floor: {
-                  $divide: [
-                    { $indexOfArray: [dataLength, "$$ROOT._id"] },
-                    ratio,
-                  ],
-                },
-              },
-              ratio,
-            ],
-          },
-          timestamp: { $first: "$timestamp" },
-          profitPercentage: { $avg: "$profitPercentage" },
-        },
-      },
-      { $sort: { _id: 1 } },
-    ]);
-
-    return downsampledData;
-  } catch (error) {
-    throw error;
-  }
-};

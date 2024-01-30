@@ -57,7 +57,7 @@ const Dashboard = () => {
                   ))}
                 </div>
                 <div className="row">
-                  <div className="col-6">
+                  <div className="col-6 customer-card">
                     <div className="content-box content-box-space">
                       <div className="content-header">
                         <div className="content-titile">

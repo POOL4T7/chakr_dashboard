@@ -28,17 +28,6 @@ const Sidebar = () => {
                 Customers
                 <div className="fa fa-caret-down sub-icon"></div>
               </a>
-              <ul>
-                <li>
-                  <a href="#">Customers 1</a>
-                </li>
-                <li>
-                  <a href="#">Customers 2</a>
-                </li>
-                <li>
-                  <a href="#">Customers 3</a>
-                </li>
-              </ul>
             </li>
             <li>
               <a href="#">
@@ -72,7 +61,6 @@ const Sidebar = () => {
             </li>
           </ul>
         </nav>
-      </div>
       <div className="footer-bottom">
         <div className="profile-box">
           <div className="pro-img">
@@ -100,6 +88,7 @@ const Sidebar = () => {
             </li>
           </ul>
         </div>
+      </div>
       </div>
     </div>
   );

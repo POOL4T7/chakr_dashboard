@@ -27,13 +27,20 @@ const GrowthChart = ({ data }) => {
       },
       legend:{
         show: false,
-      }
+      },
+      markers: {
+        show: false,
+      },
+      dataLabels: {
+      enabled: false,
+    },
   };
 
   const chartSeries = [
     {
       name: "Profit Percentage",
       data: data.map((entry) => entry.value),
+     
     },
   ];
 
@@ -43,7 +50,7 @@ const GrowthChart = ({ data }) => {
         options={chartOptions}
         series={chartSeries}
         type="area"
-        height={300}
+        height={200}
       />
     </div>
   );

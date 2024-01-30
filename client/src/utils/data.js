@@ -23,6 +23,12 @@ export const Customers = [
     company: "Walmart",
     imageUrl: "./src/assets/customers/jeena.png",
   },
+  {
+    id:"customer5",
+    name: "Loid Sullivan",
+    company: "Walmart",
+    imageUrl: "./src/assets/customers/maggie.png",
+  },
 ];
 
 export const cardList = [
