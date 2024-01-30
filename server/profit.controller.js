@@ -1,5 +1,19 @@
 const Profit = require("./profit.model");
 
+const months = {
+  "01": "Jan",
+  "02": "Feb",
+  "03": "Mar",
+  "04": "Apr",
+  "05": "May",
+  "06": "Jun",
+  "07": "Jul",
+  "08": "Aug",
+  "09": "Sep",
+  10: "Oct",
+  11: "Nov",
+  12: "Dec",
+};
 
 exports.tops = async (req, res) => {
   try {
@@ -127,12 +141,26 @@ exports.getGrowth = async (req, res) => {
       );
     }
 
-    const growth = await Profit.aggregate(filters);
-
+    const growth = await Profit.aggregate([
+      ...filters,
+      {
+        $project: {
+          _id: 1,
+          value: { $round: ["$totalRevenue", 2] },
+        },
+      },
+    ]);
+    const formattedGrowth = growth.map((entry) => ({
+      label:
+        req.query.q === "all"
+          ? entry._id.year.toString()
+          : months[`${entry._id.month.toString().padStart(2, "0")}`],
+      value: entry.value.toString(),
+    }));
     return res.status(200).json({
       success: true,
       data: {
-        growth: growth,
+        growth: formattedGrowth,
       },
     });
   } catch (e) {

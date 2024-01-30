@@ -5,60 +5,35 @@ import CustomerCard from "../components/CustomerCard";
 import Sidebar from "../components/Sidebar";
 import { Customers, cardList } from "../utils/data";
 
-const mockData = [
-  {
-    label: 1,
-    value: "7058.49".substring(0,6),
-  },
-  {
-    label: 2,
-    value: "10322.76",
-  },
-  {
-    label: 3,
-    value: "19859.52",
-  },
-  {
-    label: 4,
-    value: "23680.91",
-  },
-  {
-    label: 5,
-    value: "30468.89",
-  },
-  {
-    label: 6,
-    value: "23461.67",
-  },
-];
-
 const Dashboard = () => {
-  const [chartData , setChartData] = useState([]);
-  const [graphTime, setGraphTime] = useState("all");
+  const [chartData, setChartData] = useState([]);
 
-  const onchnageTimeStamp=async (e)=>{
+  const onchnageTimeStamp = async (e) => {
     try {
-      setGraphTime(e.target.value);
-      setChartData(mockData);
+      const response = await fetch(
+        `${import.meta.env.VITE_SERVER_URL}/growth?q=${e.target.value}`
+      );
+      const downsampledData = await response.json();
+      setChartData(downsampledData.data?.growth || []);
     } catch (e) {
-      console.log('e.message', e.message);
+      console.log("e.message", e.message);
     }
-  }
+  };
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch('/api/downsampled-data');
-  //       const downsampledData = await response.json();
-  //       chartData(downsampledData);
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/growth?q=all`);
+        const downsampledData = await response.json();
+        setChartData(downsampledData.data?.growth || []);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
-  //   fetchData();
-  // }, []);
-  
+    fetchData();
+  }, []);
+
   return (
     <div className="dashboard">
       <div className="container-fluid">
@@ -124,7 +99,9 @@ const Dashboard = () => {
                           <h3>Growth</h3>
                         </div>
                         <div className="content-right">
-                          <select value={graphTime} onChange={onchnageTimeStamp}>
+                          <select
+                            onChange={onchnageTimeStamp}
+                          >
                             <option value="all">Yearly</option>
                             <option value="2018">2018</option>
                             <option value="2017">2017</option>

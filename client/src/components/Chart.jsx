@@ -7,6 +7,7 @@ const GrowthChart = ({ data }) => {
     },
     xaxis: {
       type: "category",
+      categories: data.map(entry => entry.label),
     },
     fill: {
       colors: ["#25CD25"],
