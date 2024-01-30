@@ -1,4 +1,4 @@
-import logo from "../assets/logo.png";
+import logo from "/assets/logo.png";
 
 const Sidebar = () => {
   return (
@@ -10,7 +10,7 @@ const Sidebar = () => {
       </div>
       <div className="vertical-menu">
         <div className="serach">
-          <input type="text" placeholder="Serach" />
+          <input type="text" placeholder="Search" />
           <i className="fa fa-search" aria-hidden="true"></i>
         </div>
         <nav className="animated bounceInDown">
